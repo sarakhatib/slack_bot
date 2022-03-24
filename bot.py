@@ -8,12 +8,24 @@ from github import Github
 
 # from pprint import pprint
 
+from flask import Flask
+
+app = Flask(__name__)
+
+
+@app.route("/https://slack-bot-2806.herokuapp.com/")
+def index():
+    return "Hello World!"
+
+
 load_dotenv()
 
 token = os.environ['GITHUB_TOKEN']
 g = Github(token)
 rtm = RTMClient(token=os.environ["SLACK_BOT_TOKEN"])
 github_user = g.get_user()
+
+
 # repos = user.get_repos()
 #
 # for repo in repos:
@@ -24,18 +36,16 @@ github_user = g.get_user()
 
 
 @rtm.on("message")
-
 def handle(client: RTMClient, event: dict):
     if 'Hello' in event['text']:
         hello_handler(client, event)
     elif 'Pull Request' in event['text'] or 'PR' in event['text']:
-        PR_handler(client,event)
+        PR_handler(client, event)
     else:
         client.web_client.chat_postMessage(
             channel=event['channel'],
             text="nope"
         )
-
 
 
 def hello_handler(client: RTMClient, event: dict):
@@ -48,22 +58,24 @@ def hello_handler(client: RTMClient, event: dict):
         text=f"Hi <@{user}>!"
     )
 
-def PR_handler(client: RTMClient, event: dict):
-    channel_id = event['channel']
-    thread_ts = event['ts']
-    user = event['user']  # This is not username but user ID (the format is either U*** or W***)
 
-    client.web_client.chat_postMessage(
-        channel=channel_id,
-        text="send me a number"
-    )
-    time.sleep(15)
-    @rtm.on("message")
-    def response():
-        client.web_client.chat_postMessage(
-            channel=channel_id,
-            text="okay got it"
-        )
+# def PR_handler(client: RTMClient, event: dict):
+#     channel_id = event['channel']
+#     thread_ts = event['ts']
+#     user = event['user']  # This is not username but user ID (the format is either U*** or W***)
+#
+#     client.web_client.chat_postMessage(
+#         channel=channel_id,
+#         text="send me a number"
+#     )
+#     time.sleep(15)
+#
+#     @rtm.on("message")
+#     def response():
+#         client.web_client.chat_postMessage(
+#             channel=channel_id,
+#             text="okay got it"
+#         )
 
 
 rtm.start()
