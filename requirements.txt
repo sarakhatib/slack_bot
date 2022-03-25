@@ -3,4 +3,4 @@ python-dotenv==0.19.2
 PyGitHub==1.55
 Flask==1.1.2
 itsdangerous==2.0.1
-gunicorn==20.0.4
+Jinja2==2.10.3
