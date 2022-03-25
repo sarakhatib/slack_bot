@@ -8,7 +8,7 @@ from github import Github
 
 # from pprint import pprint
 
-from flask import Flask
+from flask import Flask, request
 load_dotenv()
 
 app = Flask(__name__)
@@ -16,8 +16,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return "Hello World!"
-    #return 'Hello, world! running on %s' % request.host
+    #return "Hello World!"
+    return 'Hello, world! running on %s' % request.host
 
 
 #port = os.environ["PORT"]
