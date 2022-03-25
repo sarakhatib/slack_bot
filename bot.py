@@ -9,6 +9,7 @@ from github import Github
 # from pprint import pprint
 
 from flask import Flask
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -16,11 +17,12 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return "Hello World!"
-port = int(os.environ.get("PORT",5000))
-app.run(port)
+    #return 'Hello, world! running on %s' % request.host
 
 
-load_dotenv()
+#port = os.environ["PORT"]
+app.run()
+
 
 token = os.environ['GITHUB_TOKEN']
 g = Github(token)
@@ -80,4 +82,4 @@ def hello_handler(client: RTMClient, event: dict):
 #         )
 
 
-rtm.start()
+#rtm.start()
