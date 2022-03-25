@@ -1,1 +1,1 @@
-web: gunicorn bot:app
+kooki: python bot.py
