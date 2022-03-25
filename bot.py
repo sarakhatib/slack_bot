@@ -13,9 +13,11 @@ from flask import Flask
 app = Flask(__name__)
 
 
-@app.route("/https://slack-bot-2806.herokuapp.com/")
+@app.route('/')
 def index():
     return "Hello World!"
+port = int(os.environ.get("PORT",5000))
+app.run(port)
 
 
 load_dotenv()
