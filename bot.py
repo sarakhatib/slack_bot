@@ -15,10 +15,10 @@ load_dotenv()
 app = Flask(__name__)
 
 
-@app.route('/')
-def index():
-    # return "Hello World!"
-    return 'Hello, world! running on %s' % request.host
+# @app.route('/')
+# def index():
+#     # return "Hello World!"
+#     return 'Hello, world! running on %s' % request.host
 
 
 @app.route('/webhook', methods=['POST'])
