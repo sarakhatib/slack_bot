@@ -23,8 +23,11 @@ app = Flask(__name__)
 
 @app.route('/webhook', methods=['POST']) 
 def listen():
-    print("\nrequest.data={}".format(request.data))
-    return request.data
+    if request.method == 'POST':
+        print(request.json)
+        return '', 200
+    else:
+        abort(400)
 
 
 # port = os.environ["PORT"]
