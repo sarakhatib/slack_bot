@@ -9,6 +9,7 @@ from github import Github
 # from pprint import pprint
 
 from flask import Flask, request
+
 load_dotenv()
 
 app = Flask(__name__)
@@ -16,15 +17,20 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    #return "Hello World!"
+    # return "Hello World!"
     return 'Hello, world! running on %s' % request.host
 
 
-#port = os.environ["PORT"]
-#app.run()
+@app.route('/Webhook', methods=['POST'])
+def listen():
+    print(request.get_json())
+    return 200
+
+
+# port = os.environ["PORT"]
+# app.run()
 port = int(os.environ.get("PORT", 5000))
 app.run(host='0.0.0.0', port=port)
-
 
 token = os.environ['GITHUB_TOKEN']
 g = Github(token)
@@ -64,7 +70,6 @@ def hello_handler(client: RTMClient, event: dict):
         text=f"Hi <@{user}>!"
     )
 
-
 # def PR_handler(client: RTMClient, event: dict):
 #     channel_id = event['channel']
 #     thread_ts = event['ts']
@@ -84,4 +89,4 @@ def hello_handler(client: RTMClient, event: dict):
 #         )
 
 
-#rtm.start()
+# rtm.start()
