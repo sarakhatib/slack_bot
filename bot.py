@@ -26,9 +26,9 @@ def listen():
     if request.method == 'POST':
         print(request.json)
         return '', 200
-    elif request.method == 'GET':
-        print("Get request")
-        return '', 200
+#     elif request.method == 'GET':
+#         print("Get request")
+#         return '', 200
     else:
         abort(400)
 
