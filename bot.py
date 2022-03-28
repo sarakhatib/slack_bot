@@ -15,10 +15,10 @@ load_dotenv()
 app = Flask(__name__)
 
 
-# @app.route('/')
-# def index():
-#     # return "Hello World!"
-#     return 'Hello, world! running on %s' % request.host
+ @app.route('/')
+ def index():
+     # return "Hello World!"
+     return 'Hello, world! running on %s' % request.host
 
 
 @app.route('/webhook', methods=['POST','GET'])
@@ -26,9 +26,6 @@ def listen():
     if request.method == 'POST':
         print(request.json)
         return '', 200
-#     elif request.method == 'GET':
-#         print("Get request")
-#         return '', 200
     else:
         abort(400)
 
