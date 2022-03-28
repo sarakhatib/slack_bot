@@ -21,7 +21,7 @@ app = Flask(__name__)
 #     return 'Hello, world! running on %s' % request.host
 
 
-@app.route('/webhook', methods=['POST'])
+@app.route('/registrazione', methods=['GET', 'POST']) 
 def listen():
     print(request.get_json())
     return 200
