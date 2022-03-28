@@ -21,7 +21,7 @@ def index():
     return 'Hello, world! running on %s' % request.host
 
 
-@app.route('/Webhook', methods=['POST'])
+@app.route('/webhook', methods=['POST'])
 def listen():
     print(request.get_json())
     return 200
