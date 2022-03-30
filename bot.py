@@ -39,7 +39,6 @@ github_user = g.get_user()
 rtm = RTMClient(token=os.environ["SLACK_BOT_TOKEN"])
 
 # repos = user.get_repos()
-#
 # for repo in repos:
 #     print(repo.name)
 #     pull_requests = repo.get_pulls()
@@ -88,24 +87,4 @@ def pr_updates(json):
 
 
 
-
-# def PR_handler(client: RTMClient, event: dict):
-#     channel_id = event['channel']
-#     thread_ts = event['ts']
-#     user = event['user']  # This is not username but user ID (the format is either U*** or W***)
-#
-#     client.web_client.chat_postMessage(
-#         channel=channel_id,
-#         text="send me a number"
-#     )
-#     time.sleep(15)
-#
-#     @rtm.on("message")
-#     def response():
-#         client.web_client.chat_postMessage(
-#             channel=channel_id,
-#             text="okay got it"
-#         )
-
-
-# rtm.start()
+rtm.start()
