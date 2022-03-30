@@ -24,9 +24,8 @@ def listen():
     if request.method == 'POST':
         print(request.json)
         pr_updates(request.json)
-        return '', 200
-    else:
-        abort(400)
+    return '', 200
+
 
 
 port = int(os.environ.get("PORT", 5000))
@@ -77,14 +76,15 @@ def pr_updates(json):
     comments_arr = []
     for comment in comments_url:
         comments_arr.append(comments_url["body"])
-    message = {"Pull Request ID" : pr_id, "Pull Request URL": pr_url, "Pull Request Title": pr_title, "Pull Request Owner": user_name,"Created at": created_at, "Updated at": updated_at, "Closed at": closed_at, "Merged at": merged_at, "Repository ID":repo_id, "Repository Name":repo_name, "Comments":comments_arr}
+    message = {"Pull Request ID": pr_id, "Pull Request URL": pr_url, "Pull Request Title": pr_title,
+               "Pull Request Owner": user_name, "Created at": created_at, "Updated at": updated_at,
+               "Closed at": closed_at, "Merged at": merged_at, "Repository ID": repo_id, "Repository Name": repo_name,
+               "Comments": comments_arr}
     json_message = json.dumps(message)
     client.web_client.chat_postMessage(
         channel=channel_ID,
         text=message
     )
-
-
 
 
 rtm.start()
