@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 from github import Github
 from flask import Flask, request
 import requests
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
 
 load_dotenv()
 
@@ -13,20 +15,29 @@ token = os.environ['GITHUB_TOKEN']
 g = Github(token)
 github_user = g.get_user()
 
+
+slack_token = os.environ["SLACK_BOT_TOKEN"]
+client = WebClient(token=slack_token)
+
+
+def send_slack_message(client, txt, channel):
+    try:
+        response = client.chat_postMessage(
+            channel= channel,
+            text= txt
+        )
+    except SlackApiError as e:
+        # You will get a SlackApiError if "ok" is False
+        assert e.response["error"]  # str like 'invalid_auth', 'channel_not_found'
+
+
 rtm = RTMClient(token=os.environ["SLACK_BOT_TOKEN"])
-
-# repos = user.get_repos()
-# for repo in repos:
-#     print(repo.name)
-#     pull_requests = repo.get_pulls()
-#     for pull in pull_requests:
-#         print(pull.get_comments())
-
 channel_ID = "C03517LGE49"
-
 
 @rtm.on("message")
 def handle(client: RTMClient, event: dict):
+    print("got in")
+    print(client)
     channel_id = event['channel']
     user = event['user']  # This is not username but user ID (the format is either U*** or W***)
     client.web_client.chat_postMessage(
@@ -34,6 +45,7 @@ def handle(client: RTMClient, event: dict):
         text=f"Hi <@{user}>!"
     )
 
+rtm.start()
 
 def pr_updates(payload):
     # pr = json["pull_request"]
@@ -59,10 +71,11 @@ def pr_updates(payload):
     #            "Closed at": closed_at, "Merged at": merged_at, "Repository ID": repo_id, "Repository Name": repo_name,
     #            "Comments": comments_arr}
     # json_message = json.dumps(message)
-    rtm.web_client.chat_postMessage(
-        channel=channel_ID,
-        text=str(payload)
-    )
+    #rtm.web_client.chat_postMessage(
+    #    channel=channel_ID,
+    #    text=str(payload)
+    #)
+    send_slack_message(client, str(payload), channel_ID)
 
 
 # Flask server
@@ -86,4 +99,4 @@ def listen():
 port = int(os.environ.get("PORT", 5000))
 app.run(host='0.0.0.0', port=port, debug=True)
 
-rtm.start()
+
