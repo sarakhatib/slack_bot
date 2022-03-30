@@ -7,4 +7,3 @@ Jinja2==2.10.3
 MarkupSafe==1.1.1
 gunicorn==20.0.4
 Werkzeug==2.1.0
-BaseResponse==6.2.0
