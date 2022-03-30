@@ -76,7 +76,7 @@ def index():
     return '', 200
 
 
-@app.route('/webhook', methods='POST')
+@app.route('/webhook', methods=['POST'])
 def listen():
     print("Sia")
     #pr_updates(request.json)
