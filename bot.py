@@ -36,32 +36,32 @@ def handle(client: RTMClient, event: dict):
 
 
 def pr_updates(json):
-    pr = json["pull_request"]
-    pr_id = pr["id"]
-    pr_url = pr["html_url"]
-    pr_title = pr["title"]
-    pr_user = pr["user"]
-    user_name = pr_user["login"]
-    created_at = json["created_at"]
-    updated_at = json["updated_at"]
-    closed_at = json["closed_at"]
-    merged_at = json["merged_at"]
-    repo = json["repo"]
-    repo_id = repo["id"]
-    repo_name = repo["name"]
-    comments = json["_links"]["comments"]
-    comments_url = requests.get(comments)
-    comments_arr = []
-    for comment in comments_url:
-        comments_arr.append(comments_url["body"])
-    message = {"Pull Request ID": pr_id, "Pull Request URL": pr_url, "Pull Request Title": pr_title,
-               "Pull Request Owner": user_name, "Created at": created_at, "Updated at": updated_at,
-               "Closed at": closed_at, "Merged at": merged_at, "Repository ID": repo_id, "Repository Name": repo_name,
-               "Comments": comments_arr}
-    json_message = json.dumps(message)
-    client.web_client.chat_postMessage(
+    # pr = json["pull_request"]
+    # pr_id = pr["id"]
+    # pr_url = pr["html_url"]
+    # pr_title = pr["title"]
+    # pr_user = pr["user"]
+    # user_name = pr_user["login"]
+    # created_at = json["created_at"]
+    # updated_at = json["updated_at"]
+    # closed_at = json["closed_at"]
+    # merged_at = json["merged_at"]
+    # repo = json["repo"]
+    # repo_id = repo["id"]
+    # repo_name = repo["name"]
+    # comments = json["_links"]["comments"]
+    # comments_url = requests.get(comments)
+    # comments_arr = []
+    # for comment in comments_url:
+    #     comments_arr.append(comments_url["body"])
+    # message = {"Pull Request ID": pr_id, "Pull Request URL": pr_url, "Pull Request Title": pr_title,
+    #            "Pull Request Owner": user_name, "Created at": created_at, "Updated at": updated_at,
+    #            "Closed at": closed_at, "Merged at": merged_at, "Repository ID": repo_id, "Repository Name": repo_name,
+    #            "Comments": comments_arr}
+    # json_message = json.dumps(message)
+    rtm.web_client.chat_postMessage(
         channel=channel_ID,
-        text=message
+        text=json
     )
 
 
