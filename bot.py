@@ -35,7 +35,7 @@ def handle(client: RTMClient, event: dict):
     )
 
 
-def pr_updates(json):
+def pr_updates(payload):
     # pr = json["pull_request"]
     # pr_id = pr["id"]
     # pr_url = pr["html_url"]
@@ -61,7 +61,7 @@ def pr_updates(json):
     # json_message = json.dumps(message)
     rtm.web_client.chat_postMessage(
         channel=channel_ID,
-        text=json
+        text=str(payload)
     )
 
 
