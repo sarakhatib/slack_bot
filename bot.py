@@ -80,7 +80,7 @@ def index():
 def listen():
     if request.method == 'POST':
         print(request.json)
-        pr_updates(request.json)
+        #pr_updates(request.json)
     return '', 200
 
 
