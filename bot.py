@@ -85,6 +85,4 @@ def pr_updates(json):
     )
 
 
-
-
 rtm.start()
