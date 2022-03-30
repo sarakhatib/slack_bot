@@ -17,7 +17,7 @@ github_user = g.get_user()
 
 
 slack_token = os.environ["SLACK_BOT_TOKEN"]
-client = WebClient(token=slack_token)
+client_slack_web = WebClient(token=slack_token)
 
 
 def send_slack_message(client, txt, channel):
@@ -34,20 +34,20 @@ def send_slack_message(client, txt, channel):
 rtm = RTMClient(token=os.environ["SLACK_BOT_TOKEN"])
 channel_ID = "C03517LGE49"
 
-@rtm.on("message")
-def handle(client: RTMClient, event: dict):
-    print("got in")
-    print(client)
-    channel_id = event['channel']
-    user = event['user']  # This is not username but user ID (the format is either U*** or W***)
-    client.web_client.chat_postMessage(
-        channel=channel_id,
-        text=f"Hi <@{user}>!"
-    )
+# @rtm.on("message")
+# def handle(client: RTMClient, event: dict):
+#     print("got in")
+#     print(client)
+#     channel_id = event['channel']
+#     user = event['user']  # This is not username but user ID (the format is either U*** or W***)
+#     client.web_client.chat_postMessage(
+#         channel=channel_id,
+#         text=f"Hi <@{user}>!"
+#     )
+#
+# rtm.start()
 
-rtm.start()
-
-def pr_updates(payload):
+def pr_updates(slack_client, payload):
     # pr = json["pull_request"]
     # pr_id = pr["id"]
     # pr_url = pr["html_url"]
@@ -75,7 +75,7 @@ def pr_updates(payload):
     #    channel=channel_ID,
     #    text=str(payload)
     #)
-    send_slack_message(client, str(payload), channel_ID)
+    send_slack_message(slack_client, str(payload), channel_ID)
 
 
 # Flask server
@@ -92,7 +92,7 @@ def index():
 @app.route('/webhook', methods=['POST'])
 def listen():
     print(request.json)
-    pr_updates(request.json)
+    pr_updates(client_slack_web, request.json)
     return '', 200
 
 
