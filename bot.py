@@ -9,11 +9,6 @@ import requests
 
 load_dotenv()
 
-app = Flask(__name__)
-
-port = int(os.environ.get("PORT", 5000))
-app.run(host='0.0.0.0', port=port, debug=True)
-
 token = os.environ['GITHUB_TOKEN']
 g = Github(token)
 github_user = g.get_user()
@@ -69,6 +64,11 @@ def pr_updates(json):
         text=message
     )
 
+
+# Flask server
+app = Flask(__name__)
+
+
 @app.route('/')
 def index():
     # return "Hello World!"
@@ -83,5 +83,7 @@ def listen():
     return '', 200
 
 
+port = int(os.environ.get("PORT", 5000))
+app.run(host='0.0.0.0', port=port, debug=True)
 
 #rtm.start()
