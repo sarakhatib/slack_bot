@@ -76,11 +76,10 @@ def index():
     return '', 200
 
 
-@app.route('/webhook', methods=['POST', 'GET'])
+@app.route('/webhook', methods='POST')
 def listen():
-    if request.method == 'POST':
-        print(request.json)
-        #pr_updates(request.json)
+    print(request.json)
+    #pr_updates(request.json)
     return '', 200
 
 
