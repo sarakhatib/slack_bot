@@ -44,6 +44,7 @@ rtm = RTMClient(token=os.environ["SLACK_BOT_TOKEN"])
 #     pull_requests = repo.get_pulls()
 #     for pull in pull_requests:
 #         print(pull.get_comments())
+#this is added for a pull request
 
 channel_ID = "C03517LGE49"
 
