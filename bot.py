@@ -69,6 +69,7 @@ def pr_updates(json):
         text=message
     )
 
+    
 @app.route('/')
 def index():
     # return "Hello World!"
