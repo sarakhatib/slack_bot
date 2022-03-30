@@ -75,7 +75,8 @@ def pr_updates(slack_client, payload):
     #    channel=channel_ID,
     #    text=str(payload)
     #)
-    send_slack_message(slack_client, "SIA", channel_ID)
+    client = WebClient(token=slack_token)
+    send_slack_message(client, "SIA", channel_ID)
 
 send_slack_message(client_slack_web, "hello", channel_ID)
 # Flask server
