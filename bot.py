@@ -6,13 +6,15 @@ from dotenv import load_dotenv
 from github import Github
 from flask import Flask, request
 import requests
+from waitress import serve
 
 load_dotenv()
 
 app = Flask(__name__)
 
 port = int(os.environ.get("PORT", 5000))
-app.run(host='0.0.0.0', port=port, debug=True)
+#app.run(host='0.0.0.0', port=port, debug=True)
+serve(app, host='0.0.0.0', port=port)
 
 token = os.environ['GITHUB_TOKEN']
 g = Github(token)
