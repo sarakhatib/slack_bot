@@ -11,23 +11,6 @@ load_dotenv()
 
 app = Flask(__name__)
 
-
-@app.route('/')
-def index():
-    # return "Hello World!"
-    print('Hello, world! running on %s' % request.host)
-    return '', 200
-
-
-@app.route('/webhook', methods=['POST', 'GET'])
-def listen():
-    if request.method == 'POST':
-        print(request.json)
-        pr_updates(request.json)
-    return '', 200
-
-
-
 port = int(os.environ.get("PORT", 5000))
 app.run(host='0.0.0.0', port=port, debug=True)
 
@@ -85,6 +68,21 @@ def pr_updates(json):
         channel=channel_ID,
         text=message
     )
+
+@app.route('/')
+def index():
+    # return "Hello World!"
+    print('Hello, world! running on %s' % request.host)
+    return '', 200
+
+
+@app.route('/webhook', methods=['POST', 'GET'])
+def listen():
+    if request.method == 'POST':
+        print(request.json)
+        pr_updates(request.json)
+    return '', 200
+
 
 
 rtm.start()
