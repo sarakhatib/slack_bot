@@ -58,9 +58,9 @@ def pr_updates(slack_client, payload):
     # updated_at = payload["updated_at"]
     # closed_at = payload["closed_at"]
     # merged_at = payload["merged_at"]
-    repo = pr["repo"]
-    repo_id = repo["id"]
-    repo_name = repo["name"]
+    #repo = pr["repo"]
+    #repo_id = repo["id"]
+    #repo_name = repo["name"]
     # comments = payload["_links"]["comments"]
     # comments_url = requests.get(comments)
     # comments_arr = []
@@ -70,7 +70,9 @@ def pr_updates(slack_client, payload):
     #            "Pull Request Owner": user_name, "Created at": created_at, "Updated at": updated_at,
     #            "Closed at": closed_at, "Merged at": merged_at, "Repository ID": repo_id, "Repository Name": repo_name,
     #            "Comments": comments_arr}
-    message = "Pull Request ID: " + pr_id + '/n' + "Pull Request URL: " + pr_url + '/n' + "Pull Request Title: " + pr_title + '/n' + "Pull Request Owner: " + user_name + '/n' + "Repository ID: " + repo_id + '/n' + "Repository Name: " + repo_name
+    message = "Pull Request ID: " + pr_id + '/n' + "Pull Request URL: " + pr_url + '/n' + "Pull Request Title: " \
+              + pr_title + '/n' + "Pull Request Owner: " + user_name + '/n' \
+              #+ "Repository ID: " \+ repo_id + '/n' + "Repository Name: " + repo_name
     send_slack_message(slack_client, message, channel_ID)
 
 
