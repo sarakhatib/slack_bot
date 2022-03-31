@@ -15,7 +15,6 @@ token = os.environ['GITHUB_TOKEN']
 g = Github(token)
 github_user = g.get_user()
 
-
 slack_token = os.environ["SLACK_BOT_TOKEN"]
 client_slack_web = WebClient(token=slack_token)
 
@@ -23,8 +22,8 @@ client_slack_web = WebClient(token=slack_token)
 def send_slack_message(client, txt, channel):
     try:
         response = client.chat_postMessage(
-            channel= channel,
-            text= txt
+            channel=channel,
+            text=txt
         )
     except SlackApiError as e:
         # You will get a SlackApiError if "ok" is False
@@ -33,6 +32,7 @@ def send_slack_message(client, txt, channel):
 
 rtm = RTMClient(token=os.environ["SLACK_BOT_TOKEN"])
 channel_ID = "C03517LGE49"
+
 
 # @rtm.on("message")
 # def handle(client: RTMClient, event: dict):
@@ -48,20 +48,20 @@ channel_ID = "C03517LGE49"
 # rtm.start()
 
 def pr_updates(slack_client, payload):
-    # pr = json["pull_request"]
-    # pr_id = pr["id"]
-    # pr_url = pr["html_url"]
-    # pr_title = pr["title"]
-    # pr_user = pr["user"]
-    # user_name = pr_user["login"]
-    # created_at = json["created_at"]
-    # updated_at = json["updated_at"]
-    # closed_at = json["closed_at"]
-    # merged_at = json["merged_at"]
-    # repo = json["repo"]
-    # repo_id = repo["id"]
-    # repo_name = repo["name"]
-    # comments = json["_links"]["comments"]
+    pr = payload["pull_request"]
+    pr_id = pr["id"]
+    pr_url = pr["html_url"]
+    pr_title = pr["title"]
+    pr_user = pr["user"]
+    user_name = pr_user["login"]
+    # created_at = payload["created_at"]
+    # updated_at = payload["updated_at"]
+    # closed_at = payload["closed_at"]
+    # merged_at = payload["merged_at"]
+    repo = payload["repo"]
+    repo_id = repo["id"]
+    repo_name = repo["name"]
+    # comments = payload["_links"]["comments"]
     # comments_url = requests.get(comments)
     # comments_arr = []
     # for comment in comments_url:
@@ -70,12 +70,9 @@ def pr_updates(slack_client, payload):
     #            "Pull Request Owner": user_name, "Created at": created_at, "Updated at": updated_at,
     #            "Closed at": closed_at, "Merged at": merged_at, "Repository ID": repo_id, "Repository Name": repo_name,
     #            "Comments": comments_arr}
-    # json_message = json.dumps(message)
-    #rtm.web_client.chat_postMessage(
-    #    channel=channel_ID,
-    #    text=str(payload)
-    #)
-    send_slack_message(slack_client, str(payload), channel_ID)
+    message = "Pull Request ID: " + pr_id + '/n' + "Pull Request URL: " + pr_url + '/n' + "Pull Request Title: " + pr_title + '/n' + "Pull Request Owner: " + user_name + '/n' + "Repository ID: " + repo_id + '/n' + "Repository Name: " + repo_name
+    send_slack_message(slack_client, message, channel_ID)
+
 
 send_slack_message(client_slack_web, "hello", channel_ID)
 # Flask server
@@ -98,5 +95,3 @@ def listen():
 
 port = int(os.environ.get("PORT", 5000))
 app.run(host='0.0.0.0', port=port, debug=True)
-
-
