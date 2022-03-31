@@ -58,7 +58,7 @@ def pr_updates(slack_client, payload):
     # updated_at = payload["updated_at"]
     # closed_at = payload["closed_at"]
     # merged_at = payload["merged_at"]
-    repo = payload["repo"]
+    repo = pr["repo"]
     repo_id = repo["id"]
     repo_name = repo["name"]
     # comments = payload["_links"]["comments"]
