@@ -26,26 +26,11 @@ def send_slack_message(client, txt, channel):
             text=txt
         )
     except SlackApiError as e:
-        # You will get a SlackApiError if "ok" is False
-        assert e.response["error"]  # str like 'invalid_auth', 'channel_not_found'
+        assert e.response["error"]
 
 
-rtm = RTMClient(token=os.environ["SLACK_BOT_TOKEN"])
 channel_ID = "C03517LGE49"
 
-
-# @rtm.on("message")
-# def handle(client: RTMClient, event: dict):
-#     print("got in")
-#     print(client)
-#     channel_id = event['channel']
-#     user = event['user']  # This is not username but user ID (the format is either U*** or W***)
-#     client.web_client.chat_postMessage(
-#         channel=channel_id,
-#         text=f"Hi <@{user}>!"
-#     )
-#
-# rtm.start()
 
 def pr_updates(slack_client, payload):
     pr = payload["pull_request"]
@@ -54,36 +39,17 @@ def pr_updates(slack_client, payload):
     pr_title = pr["title"]
     pr_user = pr["user"]
     user_name = pr_user["login"]
-    # created_at = payload["created_at"]
-    # updated_at = payload["updated_at"]
-    # closed_at = payload["closed_at"]
-    # merged_at = payload["merged_at"]
-    #repo = pr["repo"]
-    #repo_id = repo["id"]
-    #repo_name = repo["name"]
-    # comments = payload["_links"]["comments"]
-    # comments_url = requests.get(comments)
-    # comments_arr = []
-    # for comment in comments_url:
-    #     comments_arr.append(comments_url["body"])
-    # message = {"Pull Request ID": pr_id, "Pull Request URL": pr_url, "Pull Request Title": pr_title,
-    #            "Pull Request Owner": user_name, "Created at": created_at, "Updated at": updated_at,
-    #            "Closed at": closed_at, "Merged at": merged_at, "Repository ID": repo_id, "Repository Name": repo_name,
-    #            "Comments": comments_arr}
-    message = "Pull Request ID: " + str(pr_id) + '\n' + "Pull Request URL: " + pr_url + '\n' + "Pull Request Title: " \
+    message = "Hi Users, This message is sent to tell you that a change has been made in a certain PR, see the following details:"+'\n+Pull Request ID: " + str(pr_id) + '\n' + "Pull Request URL: " + pr_url + '\n' + "Pull Request Title: " \
               + pr_title + '\n' + "Pull Request Owner: " + user_name + '\n' \
-              #+ "Repository ID: " \+ repo_id + '/n' + "Repository Name: " + repo_name
     send_slack_message(slack_client, message, channel_ID)
 
 
-send_slack_message(client_slack_web, "hello", channel_ID)
 # Flask server
 app = Flask(__name__)
 
 
 @app.route('/')
 def index():
-    # return "Hello World!"
     print('Hello, world! running on %s' % request.host)
     return '', 200
 
