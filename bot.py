@@ -39,8 +39,9 @@ def pr_updates(slack_client, payload):
     pr_title = pr["title"]
     pr_user = pr["user"]
     user_name = pr_user["login"]
-    message = "Hi Users, This message is sent to tell you that a change has been made in a certain PR, see the following details:"+'\n'+Pull Request ID: " + str(pr_id) + '\n' + "Pull Request URL: " + pr_url + '\n' + "Pull Request Title: " \
-              + pr_title + '\n' + "Pull Request Owner: " + user_name + '\n' \
+    message = "Hi Users, This message is sent to tell you that a change has been made in a certain PR, see the following details:"\
+    +'\n'+"Pull Request ID: " + str(pr_id) + '\n' + "Pull Request URL: " + pr_url + '\n' + "Pull Request Title: "+ pr_title \
+    + '\n' + "Pull Request Owner: " + user_name
     send_slack_message(slack_client, message, channel_ID)
 
 
