@@ -9,6 +9,7 @@ import requests
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
+
 load_dotenv()
 
 token = os.environ['GITHUB_TOKEN']
